@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default}">
+<head>
+  <title>Quản lý Bếp</title>
+  <link rel="stylesheet" th:href="@{/css/kitchen.css}">
+</head>
+<body>
+<div layout:fragment="content">
+  <div class="container">
+    <h2 class="section-title">Danh Sách Đơn Hàng</h2>
+    <div class="order-list">
+      <div th:each="order : ${orders}" class="order-card">
+        <div class="order-header">
+          <h3 class="dish-name" th:text="${order.dishName}"></h3>
+          <span th:class="${'priority-badge ' +
+                            (order.priority == 'high' ? 'priority-high' :
+                            (order.priority == 'medium' ? 'priority-medium' : 'priority-low'))}"
+                th:text="${order.priority}">
+                        </span>
+        </div>
+        <div class="order-details">
+          <p class="quantity">
+            <i class="fas fa-hashtag"></i>
+            <span th:text="${order.quantity}"></span>
+          </p>
+          <p class="time">
+            <i class="fas fa-clock"></i>
+            <span th:text="${#temporals.format(order.createdAt, 'HH:mm:ss')}"></span>
+          </p>
+          <p class="status">
+            <i class="fas fa-info-circle"></i>
+            <span th:class="${'status-badge ' +
+                                (order.status == 'pending' ? 'status-pending' :
+                                (order.status == 'in-progress' ? 'status-in-progress' : 'status-completed'))}"
+                  th:text="${order.status}">
+                            </span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
+
